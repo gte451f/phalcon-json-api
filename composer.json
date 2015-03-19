@@ -1,0 +1,7 @@
+{   
+    "require": {
+        	"jsanc623/phpbenchtime": "dev-master"
+    },
+    "require-dev": {
+    } 
+}
