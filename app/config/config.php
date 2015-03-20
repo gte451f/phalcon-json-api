@@ -25,13 +25,7 @@ $config = [
         'publicUrl' => 'http://localhost:8080/phalcon-json-api/',
         'debugApp' => false
     ],
-    'database' => [
-        'adapter' => 'Mysql',
-        'host' => 'localhost',
-        'username' => 'api',
-        'password' => 'api',
-        'dbname' => 'phalon-json-api'
-    ],
+    'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',
     'namespaces' => [
         'models' => "PhalconRest\\Models\\",
         'controllers' => "PhalconRest\\Controllers\\",

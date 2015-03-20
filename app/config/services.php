@@ -10,10 +10,9 @@ use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Db\Adapter\Pdo\Mysql as Connection;
 use PhalconRest\Libraries\MessageBag as MessageBag;
 
-
 // internal libraries
 use PhalconRest\Libraries\Request\Request as Request;
-//use PhalconRest\Libraries\Request\Request;
+// use PhalconRest\Libraries\Request\Request;
 use PhalconRest\Libraries\Formatters\Inflector;
 
 // for keeping time
@@ -32,7 +31,7 @@ $T->start();
 $di = new DefaultDI();
 
 $di->setShared('request', function () {
-    //$request = new \PhalconRest\Libraries\Request\Request();
+    // $request = new \PhalconRest\Libraries\Request\Request();
     $request = new Request();
     // we expect inputs to be camel, so we convert to snake for server side
     $request->defaultCaseFormat = 'snake';
@@ -123,7 +122,8 @@ $di->set('db', function () use($config) {
         }
     });
     
-    $connection = new Connection($config['database']);
+    $connection = new Phalcon\Db\Adapter\Pdo\Sqlite($config);
+    // $connection = new Connection(array("/code/phalcon-json-api/app/database/sample-database.sqlite"));
     
     // Assign the eventsManager to the db adapter instance
     $connection->setEventsManager($eventsManager);
