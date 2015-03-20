@@ -1,6 +1,7 @@
 {   
     "require": {
-        	"jsanc623/phpbenchtime": "dev-master"
+        	"jsanc623/phpbenchtime": "dev-master",
+        	"gte451f/phalcon-json-api-package": "dev-dev"
     },
     "require-dev": {
     } 

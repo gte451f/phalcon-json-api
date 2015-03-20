@@ -3,6 +3,8 @@
 /.settings/
 /vendor/
 /composer.lock
+/deployment.properties
+/deployment.xml
 
 
 # Octocat's Idea's on what to ignore
