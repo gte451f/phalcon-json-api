@@ -30,6 +30,7 @@ $T->start();
 $di = new DefaultDI();
 
 $di->setShared('request', function () {
+    // $request = new \PhalconRest\Libraries\Request\Request();
     $request = new Request();
     // we expect inputs to be camel, so we convert to snake for server side
     $request->defaultCaseFormat = 'snake';
