@@ -1,7 +1,7 @@
 <?php
-// Override production configs for staging environment
-// app/config/staging.php
-$staging = [
+// Override production configs for development environment
+// app/config/development.php
+$development = [
     'application' => [
         'debugApp' => true
     ],    
@@ -17,4 +17,4 @@ $staging = [
     ] // uses as a system wide prefix to all file storage paths
 ];
 
-return $staging;
+return $development;

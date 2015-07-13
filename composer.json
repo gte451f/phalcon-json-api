@@ -1,8 +1,10 @@
 {   
     "require": {
-        	"jsanc623/phpbenchtime": "dev-master",
-        	"gte451f/phalcon-json-api-package": "dev-dev"
+        "jsanc623/phpbenchtime": "dev-master",
+        "gte451f/phalcon-json-api-package": "dev-master"
     },
     "require-dev": {
+        "codeception/codeception": "*",
+        "flow/jsonpath": "dev-master"
     } 
 }

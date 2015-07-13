@@ -23,17 +23,8 @@ $config = [
         'baseUri' => '/',
         'basePath' => '/',
         'publicUrl' => 'http://localhost:8080/phalcon-json-api/',
-        'debugApp' => false
-    ],
-    'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',
-    'namespaces' => [
-        'models' => "PhalconRest\\Models\\",
-        'controllers' => "PhalconRest\\Controllers\\",
-        'libraries' => "PhalconRest\\Libraries\\",
-        'entities' => "PhalconRest\\Entities\\"
-    ],
-    'fileStorage' => [
-        'basePath' => '/tmp/',     // uses as a system wide prefix to all file storage paths     
+        'debugApp' => false,
+        'corsOrigin'=> 'http://localhost:4200'
     ]
 ];
 

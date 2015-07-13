@@ -2,7 +2,7 @@
 use Phalcon\Mvc\Micro\Collection;
 
 /**
- * Our application is a Micro application, so we mush explicitly define all the routes.
+ * Our application is a Micro application, so we must explicitly define all the routes.
  * For APIs, this is ideal. This is as opposed to the more robust MVC Application
  *
  * @var $app
@@ -16,19 +16,12 @@ $app->setDI($di);
  * Returning false stops any route from executing.
  */
 
-$app->before(function () use($app, $di)
-{
-    // TODO
-    // set standard CORS headers before routing just incase no valid route is found
-    // hard coded until we can figure out a better way to calculate this
-    // probably perform some calcs based on prduction vs development
-    $app->response->setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    
-    // this seems to fail every time in a local environment
-    // have not tested in production, that is with a FQDN
-    // $origin = $app->request->getHeader("ORIGIN") ? $app->request->getHeader("ORIGIN") : '*';
-    
-    // authenticate here
+/**
+ * set standard CORS headers before routing just incase no valid route is found
+ */
+$app->before(function () use($app, $di) {
+    $config = $di->get('config');
+    $app->response->setHeader('Access-Control-Allow-Origin', $config['application']['corsOrigin']);
     return true;
 });
 
@@ -40,12 +33,11 @@ foreach ($di->get('collections') as $collection) {
 }
 
 /**
- * The base route return the list of defined routes for the application.
+ * The base route returns the list of defined routes for the application.
  * This is not strictly REST compliant, but it helps to base API documentation off of.
  * By calling this, you can quickly see a list of all routes and their methods.
  */
-$app->get('/', function () use($app)
-{
+$app->get('/', function () use($app) {
     $routes = $app->getRouter()
         ->getRoutes();
     $routeDefinitions = array(
@@ -72,8 +64,7 @@ $app->get('/', function () use($app)
  * However, by parsing the request querystring's 'type' paramter, it is easy to install
  * different response type handlers.
  */
-$app->after(function () use($app)
-{
+$app->after(function () use($app) {
     $method = $app->request->getMethod();
     
     switch ($method) {
@@ -132,7 +123,7 @@ $app->after(function () use($app)
             break;
         
         default:
-            throw new \PhalconRest\Exceptions\HTTPException('Could not return results in specified format', 403, array(
+            throw new \PhalconRest\Util\HTTPException('Could not return results in specified format', 403, array(
                 'dev' => 'Could not understand type specified by type paramter in query string.',
                 'internalCode' => '3',
                 'more' => 'Type may not be implemented. Choose either "csv" or "json"'
@@ -145,10 +136,21 @@ $app->after(function () use($app)
  * The notFound service is the default handler function that runs when no route was matched.
  * We set a 404 here unless there's a suppress error codes.
  */
-$app->notFound(function () use($app)
-{
-    throw new \PhalconRest\Exceptions\HTTPException('Not Found.', 404, array(
-        'dev' => 'That route was not found on the server.',
+$app->notFound(function () use($app, $di) {
+    $request = $di->get('request');
+    $query = $request->getQuery();
+    $url = '?';
+    $count = 0;
+    foreach ($query as $key => $value) {
+        if ($count > 0) {
+            $url .= "&";
+        }
+        $url .= "$key=$value";
+        $count++;
+    }
+    
+    throw new \PhalconRest\Util\HTTPException('Not Found.', 404, array(
+        'dev' => "That route was not found on the server: " . $url,
         'internalCode' => '4',
         'more' => 'Check route for mispellings.'
     ));
@@ -160,10 +162,14 @@ $app->notFound(function () use($app)
  * TODO: Improve this.
  * TODO: Kept here due to dependency on $app
  */
-set_exception_handler(function ($exception) use($app)
-{
+set_exception_handler(function ($exception) use($app) {
     // HTTPException's send method provides the correct response headers and body
-    if (is_a($exception, 'PhalconRest\\Exceptions\\HTTPException')) {
+    if (is_a($exception, 'PhalconRest\\Util\\HTTPException')) {
+        $exception->send();
+    }
+    
+    // HTTPException's send method provides the correct response headers and body
+    if (is_a($exception, 'PhalconRest\\Util\\ValidationException')) {
         $exception->send();
     }
     error_log($exception);

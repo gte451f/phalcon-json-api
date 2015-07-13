@@ -7,6 +7,6 @@ namespace PhalconRest\Controllers;
  * @author jjenkins
  *        
  */
-class UserController extends \PhalconRest\API\BaseController
+class CustomerController extends \PhalconRest\API\BaseController
 {
 }

@@ -1,30 +1,24 @@
 <?php
 // let apache tell us what environment we are in
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'staging'));
+defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
 
 // Define path to application directory
 defined('APPLICATION_PATH') || define('APPLICATION_PATH', str_replace('/public', '/app/', __DIR__));
 
-use \PhalconRest\Exceptions\HTTPException;
+use \PhalconRest\Util\HTTPException;
 error_reporting(E_ALL);
 
 try {
     
     /**
-     * load low level helpers
-     * comment out since it's loaded in config instead
-     */
-    // require_once APPLICATION_PATH . 'helpers/base.php';
-    
-    /**
      * read in config values
      */
     require_once APPLICATION_PATH . 'config/config.php';
-
+    
     /**
-     * bootstrap Phalcon Auto Loader
+     * bootstrap phalcon autoload including composer
      */
-    require_once APPLICATION_PATH . 'config/loader.php';    
+    require_once APPLICATION_PATH . 'config/loader.php';
     
     /**
      * read in services
@@ -51,10 +45,7 @@ try {
     ));
     
     // d($e->getTrace());
-} catch (PDOException $e) {
-    
-    echo $e->getMessage();
-    print_r($e->getTrace());
-    
-    print_r($e->getTrace());
+} catch (PDOException $e) {    
+    // echo $e->getMessage();
+    print_r($e->getTrace());    
 }

@@ -1,48 +1,49 @@
 <?php
 namespace PhalconRest\Models;
 
-class Users extends \PhalconRest\API\BaseModel
+class Customers extends \PhalconRest\API\BaseModel
 {
 
     /**
      *
      * @var integer
      */
-    public $id;
+    public $user_id;
 
     /**
      *
      * @var string
      */
-    public $first_name;
+    public $type;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $last_name;
+    public $revenue;
 
     /**
+     * this model's parent model
      *
      * @var string
      */
-    public $secret;
+    public static $parentModel = 'Users';
 
     /**
      *
      * (non-PHPdoc)
-     * 
+     *
      * @see \PhalconRest\API\BaseModel::initialize()
      */
     public function initialize()
     {
         parent::initialize();
         
-        $this->blockColumns = array(
-            'secret'
-        );
+        $this->hasOne("user_id", "PhalconRest\Models\Users", "id", array(
+            'alias' => 'Users'
+        ));
         
-        $this->hasMany("id", "PhalconRest\Models\Addresses", "user_id", array(
+        $this->hasMany("user_d", "PhalconRest\Models\Addresses", "user_id", array(
             'alias' => 'Addresses'
         ));
     }
