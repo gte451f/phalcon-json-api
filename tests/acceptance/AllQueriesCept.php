@@ -1,0 +1,40 @@
+<?php
+$I = new AcceptanceTester($scenario);
+$I->wantTo('Test query abilities of all api end points');
+
+$endpoints = array(
+    'addresses',
+    'customers',
+    'users'
+);
+
+foreach ($endpoints as $endpoint) {
+    $I->sendGet("$endpoint?limit=2");
+    $I->seeResponseCodeIs(200);
+    $I->seeResponseIsJson();
+    
+    $newID = $I->grabDataFromResponseByJsonPath("$.{$endpoint}[0].id");
+    
+    // test calling an individual resource
+    $I->sendGet($endpoint . '/' . $newID[0]);
+    $I->seeResponseCodeIs(200);
+    $I->seeResponseIsJson();
+    
+    // test offsett
+    $I->sendGet("$endpoint?limit=2&offset=2");
+    $I->seeResponseCodeIs(200);
+    $I->seeResponseIsJson();
+    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
+    
+    // run searches side loading all records
+    $I->sendGet("$endpoint?limit=2&offset=2&with=all");
+    $I->seeResponseCodeIs(200);
+    $I->seeResponseIsJson();
+    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
+    
+    // run searches with NO side loaded records
+    $I->sendGet("$endpoint?limit=2&offset=2&with=none");
+    $I->seeResponseCodeIs(200);
+    $I->seeResponseIsJson();
+    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
+}
