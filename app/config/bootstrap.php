@@ -19,7 +19,8 @@ $app->setDI($di);
 /**
  * set standard CORS headers before routing just incase no valid route is found
  */
-$app->before(function () use($app, $di) {
+$app->before(function () use($app, $di)
+{
     $config = $di->get('config');
     $app->response->setHeader('Access-Control-Allow-Origin', $config['application']['corsOrigin']);
     return true;
@@ -33,11 +34,12 @@ foreach ($di->get('collections') as $collection) {
 }
 
 /**
- * The base route returns the list of defined routes for the application.
+ * The base route return the list of defined routes for the application.
  * This is not strictly REST compliant, but it helps to base API documentation off of.
  * By calling this, you can quickly see a list of all routes and their methods.
  */
-$app->get('/', function () use($app) {
+$app->get('/', function () use($app)
+{
     $routes = $app->getRouter()
         ->getRoutes();
     $routeDefinitions = array(
@@ -64,13 +66,16 @@ $app->get('/', function () use($app) {
  * However, by parsing the request querystring's 'type' paramter, it is easy to install
  * different response type handlers.
  */
-$app->after(function () use($app) {
+$app->after(function () use($app)
+{
     $method = $app->request->getMethod();
+    $output = new \PhalconRest\API\Output();
     
     switch ($method) {
         case 'OPTIONS':
             $app->response->setStatusCode('200', 'OK');
             $app->response->send();
+            return;
             break;
         
         case 'DELETE':
@@ -80,63 +85,25 @@ $app->after(function () use($app) {
             break;
         
         case 'POST':
-            $app->response->setStatusCode('201', 'Created');
-            break;
-        
-        default:
-            ;
+            $output->setStatusCode('201', 'Created');
             break;
     }
     
-    $requestType = $app->request->get('type');
-    // Respond by default as JSON
-    if (! $requestType) {
-        $requestType = 'json';
-    }
+    // Results returned from the route's controller. All Controllers should return an array
+    $records = $app->getReturnedValue();
     
-    switch ($requestType) {
-        case 'json':
-            // Results returned from the route's controller. All Controllers should return an array
-            $records = $app->getReturnedValue();
-            
-            $response = new \PhalconRest\Responses\JSONResponse();
-            // this is default behavior
-            $response->useEnvelope(false)
-                ->convertSnakeCase(false)
-                ->send($records);
-            return;
-            break;
-        
-        case 'csv':
-            $records = $app->getReturnedValue();
-            $response = new \PhalconRest\Responses\CSVResponse();
-            $response->useHeaderRow(true)
-                ->send($records);
-            return;
-            break;
-        
-        case 'html':
-            $records = $app->getReturnedValue();
-            $response = new \PhalconRest\Responses\HTMLResponse();
-            $response->send($records);
-            return;
-            break;
-        
-        default:
-            throw new \PhalconRest\Util\HTTPException('Could not return results in specified format', 403, array(
-                'dev' => 'Could not understand type specified by type paramter in query string.',
-                'internalCode' => '3',
-                'more' => 'Type may not be implemented. Choose either "csv" or "json"'
-            ));
-            break;
-    }
+    // this is default behavior
+    $output->convertSnakeCase(false)
+        ->send($records);
+    return;
 });
 
 /**
  * The notFound service is the default handler function that runs when no route was matched.
  * We set a 404 here unless there's a suppress error codes.
  */
-$app->notFound(function () use($app, $di) {
+$app->notFound(function () use($app, $di)
+{
     $request = $di->get('request');
     $query = $request->getQuery();
     $url = '?';
@@ -146,12 +113,12 @@ $app->notFound(function () use($app, $di) {
             $url .= "&";
         }
         $url .= "$key=$value";
-        $count++;
+        $count ++;
     }
     
     throw new \PhalconRest\Util\HTTPException('Not Found.', 404, array(
         'dev' => "That route was not found on the server: " . $url,
-        'internalCode' => '4',
+        'code' => '4',
         'more' => 'Check route for mispellings.'
     ));
 });
@@ -162,16 +129,28 @@ $app->notFound(function () use($app, $di) {
  * TODO: Improve this.
  * TODO: Kept here due to dependency on $app
  */
-set_exception_handler(function ($exception) use($app) {
+set_exception_handler(function ($exception) use($app, $config)
+{
+    // $config = $di->get('config');
+    
     // HTTPException's send method provides the correct response headers and body
     if (is_a($exception, 'PhalconRest\\Util\\HTTPException')) {
         $exception->send();
+        error_log($exception);
+        // end early to make sure nothing else gets in the way of delivering response
+        return;
     }
     
     // HTTPException's send method provides the correct response headers and body
     if (is_a($exception, 'PhalconRest\\Util\\ValidationException')) {
         $exception->send();
+        error_log($exception);
+        // end early to make sure nothing else gets in the way of delivering response
+        return;
     }
-    error_log($exception);
-    error_log($exception->getTraceAsString());
+    
+    // seems like this is only run when an unexpected exception occurs
+    if ($config['application']['debugApp'] == true) {
+        Kint::dump($exception);
+    }
 });

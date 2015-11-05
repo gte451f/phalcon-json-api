@@ -4,12 +4,17 @@
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
+
+#
+# set URL to match your own local install
+#
+
 class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: 'http://localhost/phalcon-json-api/'
+            url: 'http://base-api.dev/'
         - \Helper\Acceptance
         - REST:
             depends: PhpBrowser
-            url: 'http://localhost/phalcon-json-api/v1/'
+            url: 'http://base-api.dev/v1/'

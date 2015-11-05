@@ -1,20 +1,28 @@
 <?php
-// Override production configs for development environment
+
+/**
+ * Override base configs for development environment
+ * 
+ * APPLICATION_ENV
+ */
+
+
 // app/config/development.php
 $development = [
     'application' => [
-        'debugApp' => true
-    ],    
-    'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',
-    'namespaces' => [
-        'models' => "PhalconRest\\Models\\",
-        'controllers' => "PhalconRest\\Controllers\\",
-        'libraries' => "PhalconRest\\Libraries\\",
-        'entities' => "PhalconRest\\Entities\\"
+        'loggingDir' => '/tmp/',
+        'baseUri' => '/',
+        'basePath' => '/',
+        'publicUrl' => 'http://base-api.dev:8080',
+        'debugApp' => false,
+        'corsOrigin' => 'http://base-api.dev:8080'
     ],
+    // user local database for easy example
+    'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',
+    //
     'fileStorage' => [
         'basePath' => '/tmp/'
-    ] // uses as a system wide prefix to all file storage paths
+    ]
 ];
 
 return $development;

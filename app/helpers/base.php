@@ -27,3 +27,26 @@ function array_merge_recursive_replace()
     }
     return $base;
 }
+
+/**
+ * convert various dates to a common format
+ * 
+ * @param string $date
+ */
+function us_date($date = null)
+{
+    switch ($date) {
+        case '':
+        case '--':
+        case '//':
+        case NULL:
+        case '0000-00-00':
+        case '0000-00-00 00:00:00':
+            return '&nbsp;';
+            break;
+
+        default:
+            return date("m/d/Y", strtotime($date));
+            break;
+    }
+}

@@ -2,10 +2,19 @@
 /.project
 /.settings/
 /vendor/
-/composer.lock
 /deployment.properties
 /deployment.xml
 
+# ignore codeception files
+/tests/_data/*
+/tests/_output/*
+/tests/_support/*
+
+# ingnore mysql schema builder bak file
+*.bak
+
+# ignore gedit temp files
+*.*~
 
 # Octocat's Idea's on what to ignore
 # Compiled source #
@@ -45,6 +54,3 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-tests/_output/*
-tests/_output/*

@@ -1,7 +1,7 @@
 <?php
-// Override base configs for staging environment
-// app/config/staging.php
-$staging = [
+// Override base configs for production environment
+// app/config/production.php
+$production = [
     'application' => [
         'loggingDir' => '/tmp/',
         'baseUri' => '/',
@@ -18,4 +18,4 @@ $staging = [
     ]
 ];
 
-return $staging;
+return $production;
