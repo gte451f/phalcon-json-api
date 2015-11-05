@@ -11,11 +11,11 @@ To see a more full featured application that runs on the Phalcon + {JSON:API} pa
 
 
 ###Before you install, check this list:
-1) Install [Phalcon](https://github.com/gte451f/phalcon-json-api.git) to your webserver.  You installed a webserver with PHP right?
+1) Install [Phalcon](https://github.com/gte451f/phalcon-json-api.git) on your webserver.  You installed a webserver with PHP right?
 
 2) Make sure [Composer](https://getcomposer.org/) is installed 
 
-3) This demo application users an sqlite database for persistance storage.  Make sure that PDO support for sqlite is installed.
+3) This demo application user an sqlite database for persistant storage.  Make sure that PDO support for sqlite is installed.
 
 ie. on Ubuntu run this...
 ```
