@@ -23,15 +23,15 @@ $environmentConfig = [
         // how should property names be formatted in results?
         // possible values are camel, snake, dash and none
         // none means perform no processing on the final output
-        'propertyFormatTo' => 'snake',
+        'propertyFormatTo' => 'dash',
 
         // how are your existing database field name formatted?
         // possible values are camel, snake, dash
         // none means perform no processing on the incoming values
-        'propertyFormatFrom' => 'none',
+        'propertyFormatFrom' => 'snake',
 
         // would also accept any FOLDER name in Result\Adapters
-        'outputFormat' => 'ActiveModel'
+        'outputFormat' => 'JsonApi'
     ],
     // user local database for easy example
     'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',

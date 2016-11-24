@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gte451f/phalcon-json-api-package.git",
-                "reference": "a83f41c7720cb4ff0cca69e50d5522fa641ec157"
+                "reference": "a4adb58e8855c86ff12445711214f8dc102ed6ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gte451f/phalcon-json-api-package/zipball/a83f41c7720cb4ff0cca69e50d5522fa641ec157",
-                "reference": "a83f41c7720cb4ff0cca69e50d5522fa641ec157",
+                "url": "https://api.github.com/repos/gte451f/phalcon-json-api-package/zipball/a4adb58e8855c86ff12445711214f8dc102ed6ad",
+                "reference": "a4adb58e8855c86ff12445711214f8dc102ed6ad",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "rest",
                 "restful"
             ],
-            "time": "2016-11-23 19:36:47"
+            "time": "2016-11-24 00:49:07"
         },
         {
             "name": "jsanc623/phpbenchtime",
