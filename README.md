@@ -5,21 +5,29 @@ This project demonstrates how to use the [Phalcon + {JSON:API}](https://github.c
 It is a working example that pulls a the composer package into a Phalcon application. 
 The demo app is backed by a sqlite database but any SQL RDBMS should do.
 
-
 To see a more full featured application that runs on the Phalcon + {JSON:API} package, visit [Smores.camp](http://smores.camp).
  
 
+### Docker Demo
+This repository includes a docker-compose file that makes it super easy to demo the application.
 
-###Before you install, check this list:
-1) Install [Phalcon](https://github.com/gte451f/phalcon-json-api.git) on your webserver.  You installed a webserver with PHP right?
+1. Install Docker (Check the internet for help on that one)
+2. Clone the repo and from inside it run 
+```
+docker-compose up;
+```
+3. Visit localhost:8080
+
+### Manual Installation
+1) Install [Phalcon](https://github.com/gte451f/phalcon-json-api.git) on your webserver.  You installed a webserver with PHP 7 right?
 
 2) Make sure [Composer](https://getcomposer.org/) is installed 
 
-3) This demo application user an sqlite database for persistant storage.  Make sure that PDO support for sqlite is installed.
+3) This demo application uses an sqlite database for persistent storage.  Make sure that PDO support for sqlite is installed.
 
-ie. on Ubuntu run this...
+something like...
 ```
-sudo apt-get install php5-sqlite;
+sudo apt-get install php7-sqlite;
 ```
 
 
@@ -33,7 +41,7 @@ git clone https://github.com/gte451f/phalcon-json-api.git
  
 2) Run the following from inside your newly installed application:
 ```    
-composer install; composer dumpautoload -o;
+composer install;
 ```
         
 3) Setup your webserver for Phalcon usage. 
@@ -67,4 +75,4 @@ Try out different end points like: /v1/addresses
 	}....
 ```
 
-For more information, visit the [Phalcon + {JSON:API}](https://github.com/gte451f/phalcon-json-api-package) project.
+For more information on the package itself, visit the [Phalcon + {JSON:API}](https://github.com/gte451f/phalcon-json-api-package) project.
