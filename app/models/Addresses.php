@@ -49,12 +49,9 @@ class Addresses extends \PhalconRest\API\BaseModel
     public function initialize()
     {
         parent::initialize();
-        
+
         $this->singularName = 'Address';
-        
-        $this->belongsTo("user_id", "PhalconRest\Models\Users", "id", array(
-            'alias' => 'Users'
-        ));
+        $this->belongsTo("user_id", Users::class, "id", ['alias' => 'Users']);
     }
 
     /**

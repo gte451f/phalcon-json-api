@@ -1,9 +1,19 @@
+# zend studio files..if that is your ide
 /.buildpath
 /.project
 /.settings/
-/vendor/
+
+
+
+# what are these?
 /deployment.properties
 /deployment.xml
+
+#phpstorm
+/.idea
+
+#composer directory
+/vendor/
 
 # ignore codeception files
 /tests/_data/*

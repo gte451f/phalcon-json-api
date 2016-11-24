@@ -6,5 +6,4 @@ namespace PhalconRest\Libraries\Formatters;
  */
 class Currency
 {
-    
 }

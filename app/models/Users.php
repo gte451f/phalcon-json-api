@@ -31,19 +31,16 @@ class Users extends \PhalconRest\API\BaseModel
     /**
      *
      * (non-PHPdoc)
-     * 
+     *
      * @see \PhalconRest\API\BaseModel::initialize()
      */
     public function initialize()
     {
         parent::initialize();
-        
+
         $this->blockColumns = array(
             'secret'
         );
-        
-        $this->hasMany("id", "PhalconRest\Models\Addresses", "user_id", array(
-            'alias' => 'Addresses'
-        ));
+        $this->hasMany("id", Addresses::class, "user_id", ['alias' => 'Addresses']);
     }
 }

@@ -1,37 +1,13 @@
 <?php
-
 /**
- * store low level functions that are essential to system operation
- * TODO: Make these services or libraries in DI?
+ * store simple functions that are essential to app operation
  */
-
-/**
- * logic used to auto load the correct config based on environment
- *
- * @return array
- */
-function array_merge_recursive_replace()
-{
-    $arrays = func_get_args();
-    $base = array_shift($arrays);
-    
-    foreach ($arrays as $array) {
-        reset($base);
-        while (list ($key, $value) = @each($array)) {
-            if (is_array($value) && @is_array($base[$key])) {
-                $base[$key] = array_merge_recursive_replace($base[$key], $value);
-            } else {
-                $base[$key] = $value;
-            }
-        }
-    }
-    return $base;
-}
 
 /**
  * convert various dates to a common format
- * 
+ *
  * @param string $date
+ * @return bool|string
  */
 function us_date($date = null)
 {
@@ -39,7 +15,7 @@ function us_date($date = null)
         case '':
         case '--':
         case '//':
-        case NULL:
+        case null:
         case '0000-00-00':
         case '0000-00-00 00:00:00':
             return '&nbsp;';
@@ -49,4 +25,35 @@ function us_date($date = null)
             return date("m/d/Y", strtotime($date));
             break;
     }
+}
+
+/*
+ * |--------------------------------------------------------------------------
+ * | File Stream Modes
+ * |--------------------------------------------------------------------------
+ * |
+ * | These modes are used when working with fopen()/popen()
+ * |
+ */
+define('FOPEN_READ', 'rb');
+define('FOPEN_READ_WRITE', 'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE', 'wb'); // truncates existing file data, use with care
+define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE', 'w+b'); // truncates existing file data, use with care
+define('FOPEN_WRITE_CREATE', 'ab');
+define('FOPEN_READ_WRITE_CREATE', 'a+b');
+define('FOPEN_WRITE_CREATE_STRICT', 'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
+
+function write_file($path, $data, $mode = FOPEN_WRITE_CREATE_DESTRUCTIVE)
+{
+    if (!$fp = @fopen($path, $mode)) {
+        return false;
+    }
+
+    flock($fp, LOCK_EX);
+    fwrite($fp, $data);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+
+    return true;
 }

@@ -38,13 +38,7 @@ class Customers extends \PhalconRest\API\BaseModel
     public function initialize()
     {
         parent::initialize();
-        
-        $this->hasOne("user_id", "PhalconRest\Models\Users", "id", array(
-            'alias' => 'Users'
-        ));
-        
-        $this->hasMany("user_d", "PhalconRest\Models\Addresses", "user_id", array(
-            'alias' => 'Addresses'
-        ));
+        $this->hasOne("user_id", Users::class, "id", ['alias' => 'Users']);
+        $this->hasMany("user_d", Addresses::class, "user_id", ['alias' => 'Addresses']);
     }
 }

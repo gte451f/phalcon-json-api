@@ -4,17 +4,14 @@
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
-
-#
-# set URL to match your own local install
-#
-
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: 'http://base-api.dev/'
+        - Asserts
         - \Helper\Acceptance
+        - PhpBrowser:
+            # url: &url http://localhost:8080/v1/ # stock testing location
+            url: &url http://172.17.0.1:8080/v1/ # use this is testing from INSIDE the container
         - REST:
             depends: PhpBrowser
-            url: 'http://base-api.dev/v1/'
+            url: *url

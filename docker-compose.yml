@@ -1,0 +1,22 @@
+web:
+    image: gte451f/nginx
+    volumes:
+        - .:/var/www
+        - ./docker/nginx/sites-available/default:/etc/nginx/sites-available/default
+        - ./docker/nginx/fastcgi_params:/etc/nginx/fastcgi_params
+        - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+        - "8080:80"
+    links:
+        - php
+
+php:
+  image: gte451f/php:7.0
+  volumes:
+        - .:/var/www
+        - ./docker/file_storage:/file_storage/
+        - ./docker/php7/fpm/php.ini:/etc/php/7.0/fpm/php.ini
+        - ./docker/php7/cli/php.ini:/etc/php/7.0/cli/php.ini
+        - ./docker/php7/php-fpm.conf:/etc/php/7.0/fpm/php-fpm.conf
+        - ./docker/php7/fpm/pool.d:/etc/php/7.0/fpm/pool.d
+

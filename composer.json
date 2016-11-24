@@ -1,10 +1,24 @@
-{   
+{
+    "license": "GPL-3.0",
+    "config": {
+        "secure-http": true
+    },
     "require": {
-        "jsanc623/phpbenchtime": "dev-master",
-        "gte451f/phalcon-json-api-package": "dev-master"
+        "php": ">=7.0",
+        "gte451f/phalcon-json-api-package": "dev-dev"
     },
     "require-dev": {
         "codeception/codeception": "*",
-        "flow/jsonpath": "dev-master"
-    } 
+        "flow/jsonpath": "dev-master",
+        "phalcon/devtools": "^3.0"
+    },
+    "scripts": {
+        "post-install-cmd": "composer dumpautoload -o",
+        "post-update-cmd": "composer dumpautoload -o",
+        "clear": "rm -rf /tmp/*",
+        "test": "codecept run",
+        "test-debug": "codecept run --debug",
+        "test-api": "codecept run acceptance",
+        "test-api-debug": "codecept run acceptance --debug"
+    }
 }

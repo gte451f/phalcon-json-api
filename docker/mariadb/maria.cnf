@@ -1,0 +1,23 @@
+[mysqld]
+#
+# * InnoDB
+#
+# InnoDB is enabled by default with a 10MB datafile in /var/lib/mysql/.
+# Read the manual for more InnoDB related options. There are many!
+default_storage_engine = InnoDB
+
+# you can't just change log file size, requires special procedure
+innodb_log_file_size = 48M
+
+innodb_buffer_pool_size = 256M
+innodb_log_buffer_size = 8M
+innodb_file_per_table = 1
+innodb_file_format = Barracuda
+innodb_open_files = 400
+innodb_io_capacity = 400
+innodb_flush_method = O_DIRECT
+
+
+# New default charsets
+character_set_server=utf8
+collation_server=utf8_general_ci
