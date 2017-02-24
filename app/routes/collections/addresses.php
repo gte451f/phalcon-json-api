@@ -3,7 +3,7 @@
 /**
  * This is an example of a custom route file where you can define different actions on the route
  * you'll see below a set of standard actions that are support on this route
- * if your end point only requires the standard actions, then consider defining it in routes/routLoader.php instead
+ * if your end point only requires the standard actions, then consider defining it in routes/routeLoader.php instead
  */
 return call_user_func(function ()
 {

@@ -1,6 +1,8 @@
 <?php
-// keep a simple list of endpoints which use the standard or generic set of routes
-// no route file needed, just enter the endpoint and the controller name
+/*
+ * keep a simple list of endpoints which use the standard or generic set of routes
+ * no route file needed, just enter the endpoint and the controller name
+ */
 $genericRoutes = [
     'address' => 'AddressController',
     'customers' => 'CustomerController',

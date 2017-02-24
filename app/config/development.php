@@ -1,9 +1,13 @@
 <?php
 error_reporting(E_ALL);
 
-// Override production configs for development environment
-// this development environment is configured for docker usage
-$environmentConfig = [
+/* Override production configs for a development environment
+ * this particular development environment is configured for docker usage (see included docker-compose)
+ * create any number of configs with specific values based on the environment in which you are hosting the application
+ * for example, use a different config for a staging server or production server
+ * set the applications environment value in public/index.php to drive which config files to load
+ */
+return [
     'application' => [
         // where to store cache related files
         'cacheDir' => '/tmp/',
@@ -18,20 +22,7 @@ $environmentConfig = [
         // where should app generated logs be stored?
         'loggingDir' => '/tmp/',
         // what is the path after the FQDN?
-        'baseUri' => '/v1/',
-
-        // how should property names be formatted in results?
-        // possible values are camel, snake, dash and none
-        // none means perform no processing on the final output
-        'propertyFormatTo' => 'dash',
-
-        // how are your existing database field name formatted?
-        // possible values are camel, snake, dash
-        // none means perform no processing on the incoming values
-        'propertyFormatFrom' => 'snake',
-
-        // would also accept any FOLDER name in Result\Adapters
-        'outputFormat' => 'JsonApi'
+        'baseUri' => '/v1/'
     ],
     // user local database for easy example
     'dbname' => APPLICATION_PATH . 'database/sample-database.sqlite',
@@ -41,8 +32,3 @@ $environmentConfig = [
         'basePath' => '/file_storage/'
     ]
 ];
-
-// Define APPNAME if this is production environment
-// - must be defined on each deployed PRODUCTION version
-// useful when the production code is deployed in multiple configurations ie. portal or admin
-defined('APPLICATION_NAME') || define('APPLICATION_NAME', 'admin');

@@ -20,28 +20,22 @@ foreach ($endpoints as $endpoint) {
     $I->seeResponseCodeIs(200);
     $I->seeResponseIsJson();
 
-    $newID = $I->grabDataFromResponseByJsonPath("$.{$endpoint}[0].id");
+    $newID = $I->grabDataFromResponseByJsonPath("$.data[0].id");
 
     // test calling an individual resource
     $I->sendGet($endpoint . '/' . $newID[0]);
     $I->seeResponseCodeIs(200);
     $I->seeResponseIsJson();
 
-    // test offsett
+    // test offset
     $I->sendGet("$endpoint?limit=2&offset=2");
     $I->seeResponseCodeIs(200);
     $I->seeResponseIsJson();
-    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
+    $I->seeResponseJsonMatchesJsonPath("$.data[0].id");
 
     // run searches side loading all records
     $I->sendGet("$endpoint?limit=2&offset=2&with=all");
     $I->seeResponseCodeIs(200);
     $I->seeResponseIsJson();
-    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
-
-    // run searches with NO side loaded records
-    $I->sendGet("$endpoint?limit=2&offset=2&with=none");
-    $I->seeResponseCodeIs(200);
-    $I->seeResponseIsJson();
-    $I->seeResponseJsonMatchesJsonPath("$.{$endpoint}[*].id");
+    $I->seeResponseJsonMatchesJsonPath("$.included[0].id");
 }

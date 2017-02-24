@@ -1,12 +1,13 @@
 <?php
 namespace PhalconRest\Controllers;
 
+use PhalconRest\Libraries\API\SecureController;
+use PhalconRest\API\BaseController;
+
 /**
- * I am an empty controller because nearly all of my work was done in the parent class
- * 
- * @author jjenkins
- *        
+ * To limit access to this end point, extend the secure controller instead
  */
-class CustomerController extends \PhalconRest\API\BaseController
+class CustomerController extends BaseController
+// class CustomerController extends SecureController
 {
 }
